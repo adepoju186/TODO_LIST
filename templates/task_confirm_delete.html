@@ -1,0 +1,19 @@
+<head>
+    <title>Task Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container detail-container">
+        <h1 class="title animate-fade">⚠️ Confirm Deletion</h1>
+        <p class="task-description">
+            Are you sure you want to delete <strong>"{{ task.title }}"</strong>?
+        </p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Yes, delete</button>
+        </form>
+        <a href="{% url 'task_list' %}" class="back-link">⬅️ Cancel</a>
+    </div>
+</body>

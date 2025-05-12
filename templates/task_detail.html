@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container detail-container">
+        <h1 class="title animate-fade">📌 Task Details</h1>
+
+        <div class="task-detail-card">
+            <h2 class="task-title">{{ task.title }}</h2>
+
+            <p class="task-description">
+                🗒️ <strong>Description:</strong><br>
+                {{ task.description|default:"No description provided." }}
+            </p>
+
+            <p class="task-date">
+                🕒 <strong>Created on:</strong> {{ task.created_at|date:"F j, Y, g:i a" }}
+            </p>
+
+            <p class="task-status">
+                {% if task.completed %}
+                    ✅ <strong>Status:</strong> Completed
+                {% else %}
+                    🔄 <strong>Status:</strong> Not Completed
+                {% endif %}
+            </p>
+
+            <div class="task-buttons">
+                <a href="{% url 'task_update' task.pk %}" class="btn-glow">✏️ Edit Task</a>
+                <a href="{% url 'task_list' %}" class="back-link">⬅️ Back to Task List</a>
+                <div class="task-buttons">
+                  
+                    <a href="{% url 'task_delete' task.pk %}" class="btn-danger">🗑️ Delete Task</a>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
