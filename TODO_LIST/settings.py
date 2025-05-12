@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-import django_heroku
+#import django_heroku
 import dj_database_url
 from decouple import config
 
@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ujulyag=8zd!hhi!^d6mfn+znj431_df_mrp=p6zqef&y7&wx3'
+SECRET_KEY ='django-insecure-ujulyag=8zd!hhi!^d6mfn+znj431_df_mrp=p6zqef&y7&wx3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://todo-list-bgx5.onrender.com']
 
 
 # Application definition
@@ -79,14 +79,7 @@ WSGI_APPLICATION = 'TODO_LIST.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'TODO' ,
-        'USER':'postgres',
-        'PASSWORD':'messiah',
-        'HOST':'127.0.0.1',
-        'PORT':'5432',
-    }
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
@@ -136,4 +129,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
