@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'TODO_LIST.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
+        default=os.getenv("dpg-d0h6c2p5pdvs73ens6tg-a"),
         conn_max_age=600,
         ssl_require=True
     )
