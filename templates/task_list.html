@@ -1,44 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>To-Do List</title>
+    <meta charset="UTF-8">
+    <title>Task List</title>
     {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background-animation"></div> <!-- optional for animated effects -->
-    <div class="container">
-        <h1 class="title animate-fade">🚀 My To-Do List</h1>
-        <a href="{% url 'task_create' %}" class="add-btn">➕ Add New Task</a>
+    <!-- Background Animation -->
+    <div class="background-animation"></div>
+
+    <div class="container animate-fade">
+        <h1 class="title">My Tasks</h1>
+
+        <!-- Auth controls -->
+        {% if user.is_authenticated %}
+            <p style="text-align: center;">
+                Welcome, <strong>{{ user.username }}</strong>!
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn-glow">🚪 Logout</button>
+</form>
+
+            </p>
+        {% else %}
+            <p style="text-align: center;">
+                <a href="{% url 'login' %}" class="btn-glow">🔑 Login</a>
+                <a href="{% url 'register' %}" class="btn-glow">📝 Register</a>
+            </p>
+        {% endif %}
+
+        <!-- Add Task Button -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'task_create' %}" class="add-btn">➕ Add New Task</a>
+        {% endif %}
+
+        <!-- Task list -->
         <ul class="task-list">
-            <h2 class="subtitle">🧩 Active Tasks</h2>
             {% for task in tasks %}
-           
-            <li  class="task {% if task.completed %}completed{% endif %}">
-                <a href="{% url 'task_detail' task.pk %}">📌 {{ task.title }}</a>
-                
-            </li>
-            {% endfor %}
-        </ul>
-        <h2 class="subtitle">🎯 Completed Tasks</h2>
-        <ul class="task-list">
-            {% for task in tasks %}
-                {% if task.completed %} 
-                <li class="task completed">
-                    {{ task.title }}
-                    <span class="status">✅ Done</span>
+                <li class="task fade-in {% if task.completed %}completed{% endif %}">
+                    <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+                    <span class="status">
+                        {% if task.completed %} ✅ Done {% else %} ❌ Pending {% endif %}
+                    </span>
                 </li>
-                {% endif %}
+            {% empty %}
+                <li class="task fade-in">No tasks yet.</li>
             {% endfor %}
         </ul>
     </div>
-    <script>
-        document.querySelectorAll('.task').forEach((task, index) => {
-            setTimeout(() => {
-                task.classList.add('fade-in');
-            }, index * 100);
-        });
-    </script>
 </body>
 </html>

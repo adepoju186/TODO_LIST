@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Task Form</title>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/fom.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="background-animation"></div>
-    <div class="glass-container">
-        <h1 class="form-title animate-fade">
-            {{ form.instance.pk|default:" ✍️ Create" }} Task
-        </h1>
-        <form method="POST" class="fancy-form">
+
+    <div class="container animate-fade">
+        <h2 class="title">
+            {% if form.instance.pk %}
+                ✏️ Edit Task
+            {% else %}
+                ➕ Create Task
+            {% endif %}
+        </h2>
+
+        <form method="POST">
             {% csrf_token %}
-            {% for field in form %}
-            <div class="input-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                    <div class="error">{{ field.errors }}</div>
-                {% endif %}
+            <div class="form-fields">
+                {{ form.as_p }}
             </div>
-            {% endfor %}
-            <button type="submit" class="btn-glow">💾 Save Task</button>
+
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-glow">
+                    {% if form.instance.pk %}Update{% else %}Create{% endif %}
+                </button>
+                <a href="{% url 'task_list' %}" class="back-link">⬅ Back</a>
+            </div>
         </form>
-        <a href="{% url 'task_list' %}" class="back-link">⬅️ Back to List</a>
-        <div class="task-buttons">
-         
-        </div>
     </div>
 </body>
 </html>
