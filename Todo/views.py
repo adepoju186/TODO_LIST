@@ -18,7 +18,7 @@ def register(request):
             return redirect('task_list')
     else:
         form = UserCreationForm()
-    return render(request,  'register.html', {'form':form})
+    return render(request, 'register.html', {'form':form})
 
 
 @login_required

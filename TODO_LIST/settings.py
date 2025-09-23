@@ -77,14 +77,21 @@ WSGI_APPLICATION = 'TODO_LIST.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
 }
 
+db_url = os.environ.get('DATABSE_URL')
+if db_url:
+    DATABASES['default'] = dj_database_url.config(
+                  default=db_url,
+                  conn_max_age=600,
+                  ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
